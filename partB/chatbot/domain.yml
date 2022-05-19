@@ -1,0 +1,240 @@
+version: '3.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- GetWeather
+- GetCityDetails
+- Other
+- GetDetails
+- GetCountryDetails
+- GetSportSuggestion
+- GetCitySuggestion
+entities:
+- city
+- city_info
+- country_info
+- request
+- time
+slots:
+  city:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: city
+  request:
+    type: list
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: request
+  time:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: time
+  temp:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  humidity:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  wind:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  rain:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  hot:
+    type: bool
+    influence_conversation: false
+    mappings:
+    - type: custom
+  cold:
+    type: bool
+    influence_conversation: false
+    mappings:
+    - type: custom
+  average:
+    type: bool
+    influence_conversation: false
+    mappings:
+    - type: custom
+  city_info:
+    type: categorical
+    values:
+      - population 
+      - all 
+      - region 
+      - country 
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: city_info
+  country_info:
+    type: categorical
+    values: 
+      - both 
+      - capital 
+      - regions 
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: country_info
+  city_pop:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  city_region:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+  country_name:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+  capital_city:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+  num_of_regions:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  flag_image:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  country_code:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+responses:
+  utter_ask_city:
+  - text: Sure thing! I need to know which city you're interested in?
+  - text: Happy to tell you the weather! Which city?
+  - text: Always good to know if it'll be nice out! Which city?
+  - text: Good weather can make any outside sport more fun! Which city do you want to know about?
+  utter_temp_details:
+  - text: In {city} the average temperature will be {temp} degrees, with a {rain}% chance of rain. If you're interested, I can let you know some cool facts about {city}?
+  - text: You should suspect the temperature to be around {temp} with a {rain} chance of rain fall. Want to know some possible sports to play?
+  - text: Sure! The weather will have {rain}% chance of rain and an average temperature of {temp}!
+  - condition:
+    - type: slot
+      name: hot
+      value: true
+    text: It'll be a scorcher! Nice and warm at {temp} degrees and {rain}% chance of rain, best to get outside!
+  - condition:
+    - type: slot
+      name: average
+      value: true
+    text: It's a bit so-so with {temp} degrees and a {rain}% chance of rain but should hopefully still be nice enough to be outside in nature!
+  - condition:
+    - type: slot
+      name: cold
+      value: true
+    text: A tad cold for surfing! But could be good up in the mountains for the slopes! The temperature will be around {temp} degrees with {rain}% chance of rain.
+  utter_humidity_details:
+  - text: Humidity can make or break a good day outdoors! It'll be around {humidity}.
+  utter_wind_details:
+  - text: As a surfer I enjoy some good wind speed! It'll be around {wind}.
+  utter_humidity_and_wind:
+  - text: Humidity will be around {humidity} percent with a wind speed of {wind} miles per hour. I'm sure they'll be a sport that'll work with those conditions!
+  utter_ask_city_info:
+  - text: 'City facts? Awesome! What would you like to know: population, country, region, or all information?'
+    buttons:
+    - title: City Population
+      payload: /GetCityDetails{{"city_info":"population"}}
+    - title: Country
+      payload: /GetCityDetails{{"city_info":"country"}}
+    - title: City Region
+      payload: /GetCityDetails{{"city_info":"region"}}
+    - title: All information
+      payload: /GetCityDetails{{"city_info":"all"}}
+  utter_ask_country_info:
+  - text: Want to know more about {country_name}? Sure! What would you like to know ":" Number of regions, capital city, or all information?
+    buttons:
+    - title: Capital City
+      payload: /GetCountryDetails{{"country_info":"capital"}}
+    - title: Number of regions
+      payload: /GetCountryDetails{{"country_info":"regions"}}
+    - title: Both Facts
+      payload: /GetCountryDetails{{"country_info":"both"}}
+  utter_city_pop:
+  - text: '{city} has {city_pop} cool people in it!'
+  utter_city_country:
+  - text: "{city} is located in {country_name}. It's a great place to visit! I can also tell you a few facts about {country_name} as well if you would like."
+  utter_city_region:
+  - text: "{city_region} is where you'll find {city}!"
+  utter_city_info:
+  - text: Ah someone that likes facts as much as I do, rad! {city} is located in {city_region} which is in {country_name}. It also has a population of {city_pop}!
+  utter_capital_city:
+  - text: The capital of {country_name} is {capital_city}. I wonder if they have much of a surfing culture there!
+    image: '{flag_image}'
+  utter_different_regions:
+  - text: '{country_name} has {num_of_regions} but the important thing is how many of them you can surf in!'
+    image: '{flag_image}'
+  utter_country_details:
+  - text: '{country_name} with a capital of {capital_city} has {num_of_regions} different regions in it! It also has the following flag!'
+    image: '{flag_image}'
+  utter_sports_suggestion:
+  - condition:
+    - type: slot
+      name: hot
+      value: true
+    text: As it's quite warm out I would always recommend you try to hit the beach and go for a surf!
+  - condition:
+    - type: slot
+      name: average
+      value: true
+    text: It's not quite warm but not cold either. In that case I always find this weather great for runs in nature!
+  - condition:
+    - type: slot
+      name: cold
+      value: true
+    text: Well as the weather outside is already a bit cold you might as well try and hit up any snowboarding locations near by.
+  - text: I don't know enough about the weather to give an accurate sport but you can almost always go for a nice walk if you take the right coat!
+  utter_different_city:
+  - text: Well if you enjoy surfing you can always head to the Gold Coast or if you want something a bit different you could try Tofino in BC.
+  - text: If trail running is more your speed, the West Highland Way in Scotland would definitely be a fun challenge!
+  - text: For snowboarding you can't beat the Alps or maybe Whistler or Aspen in NA
+  - text: For running I would always say you can try a run around your local park but any cool city break would be a cool place to run around as well. Like Tallinn or Berlin!
+actions:
+- action_city_details
+- action_country_details
+- get_weather_details
+- utter_ask_city
+- utter_ask_city_info
+- utter_ask_country_info
+- utter_city_pop
+- utter_humidity_and_wind
+- utter_humidity_details
+- utter_temp_details
+- utter_wind_details
+forms:
+  city_form:
+    required_slots:
+    - city
+  city_info_form:
+    required_slots:
+    - city_info
+  country_info_form:
+    required_slots:
+    - country_info

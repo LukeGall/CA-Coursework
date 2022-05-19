@@ -1,0 +1,81 @@
+version: "3.0"
+nlu:
+- intent: GetWeather
+  examples: |
+    - Please check the weather for me in [sonoma](city) on 9th of this month
+    - What does the weather on March 14th look like?
+    - I want to check the weather for March 7th.
+    - I want to check in [Dixon](city).
+    - Search in [Mill Valley](city)
+    - How about the weather in [Palo Alto](city) on next Tuesday?
+    - Check for me please the weather in [Mountain View](city).
+    - Do you know the weather on March 9th?
+    - In [Yountville](city), please.
+    - Please tell me the weather forecast for March 8th.
+    - Please check the weather in [Menlo Park](city).
+    - What's the weather like on Thursday next week?
+    - Look in [Sebastopol](city).
+    - What about [mill valley](city)?
+    - What'll the weather be like on March 9th?
+    - Check in [Fairfax](city).
+    - What will the weather be like on 4th of this month in [San Fran](city)?
+    - Can you find me the weather in [Novato](city) for March 13th?
+    - Can you help me check the weather for March 1st for [Campbell](city)?
+    - Please check the weather on March 7th.
+    - Please check [San Jose](city).
+    - I need the weather forecast for the 7th.
+    - Please check [Ciudad de Mexico](city)
+    - Can you check the weather in [Paris, France](city) for me?
+    - I will go to [Millbrae](city) soon. Can you check the weather in there on March 6th?
+    - I would like to check the weather.
+    - I would like [Berkeley](city).
+    - What about the March 6th.
+    - What about [Long Beach](city) on the 13th of March?
+    - i want to check the weather in [calistoga](city) on the 3rd of this month.
+    - What will the weather be like in [Pleasant Hill](city) on the 9th of March?
+    - I would like to check the weather in [Hercules](city).
+    - Can you tell me what the weather is suppose to be like on Wednesday next week in [Hercules](city)?
+    - Can you check the weather in [London](city) for me?
+    - I want [London](city)
+    - Can you check the weather in [Auckland](city)?
+    - Check in [Glasgow](city)
+    - [Boston](city)
+    - What is the weather 
+    - Is it raining?
+    - Will it rain tomorrow?
+    - Will it be hot today?
+- intent: GetDetails
+  examples: |
+    - how [humid]{"entity": "request", "value": "humidity"} would it be
+    - What about [humidity](request) and [wind](request)?
+    - Will it be [windy]{"entity": "request", "value": "wind"}? How [humid]{"entity": "request", "value": "humidity"}?
+    - What will the [humidity](request) be? Will it be [windy]{"entity": "request", "value": "wind"}?
+    - How [humid]{"entity": "request", "value": "humidity"} will it be?
+    - Will it be [windy]{"entity": "request", "value": "wind"}?
+    - How [windy]{"entity": "request", "value": "wind"} and [humid]{"entity": "request", "value": "humidity"} will it be today?
+    - Is [wind](request) going to be an issue? 
+    - Should I worry about the [humidity](request)?
+    - What is the [wind](request) speed? 
+    - What is the [wind](request), [humidity](request)?
+    - Can you tell me the [wind] speed please?
+    - What about the [humidity](request) percentage?
+- intent: Other
+  examples: |
+    - Okay.
+    - ok
+    - okay
+    - I understand.
+    - Alright.
+    - Sounds good!
+    - Thanks.
+    - okay.
+    - alright
+    - OK.
+    - That seems nice.
+    - Okay, thanks.
+- synonym: humidity
+  examples: |
+    - humid
+- synonym: wind
+  examples: |
+    - windy

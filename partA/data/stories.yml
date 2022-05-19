@@ -1,0 +1,836 @@
+version: "3.0"
+
+# Potential conversation flows
+# Training data for stories should go here
+# Good templates for the conversation
+# Look at the conversation paths from our training data
+# May not have a huge amount from the course work but we can think of them 
+# Think of edge cases maybe
+# Don't need to worry much if we only have a few intents here
+# Number of stories will likely stay similar too but we can double check later on
+# Can maybe look to do checkpoints but likely not
+
+# Use actual user stories
+# Have small stories 
+# The model will train stories by combining them together
+
+# One more attempt to get it all working
+# Try non-interactive ones and just have happy path
+# Non happy path where it gets more data 
+# and that would be it?
+# If doesn't work, go back to all interactive paths and leave out hand made ones and just leave it
+stories:
+# - story: just wind data 
+#   steps: 
+#   - intent: GetDetails
+#     entities:
+#     - request: wind
+#   - slot_was_set:
+#     - request:
+#       - wind
+#   - action: get_request_info
+
+# - story: just humidity data 
+#   steps: 
+#   - intent: GetDetails
+#     entities:
+#     - request: humidity
+#   - slot_was_set:
+#     - request:
+#       - humidity
+#   - action: get_request_info
+
+# - story: both data
+#   steps: 
+#   - intent: GetDetails
+#     entities:
+#     - request: 
+#       - humidity
+#       - wind
+#   - slot_was_set:
+#     - request:
+#       - humidity
+#       - wind
+#   - action: get_request_info
+
+- story: interactive_story_1
+  steps:
+  - intent: GetWeather
+    entities:
+    - date
+  - slot_was_set:
+    - date
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set: 
+    - requested_slot: city
+  - slot_was_set:
+    - city: Dixon
+  - slot_was_set: 
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_1
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: sonoma
+    - date
+  - slot_was_set:
+    - city: sonoma
+  - slot_was_set:
+    - date
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp: 12.18
+  - slot_was_set:
+    - humidity: 54
+  - slot_was_set:
+    - wind: 6.45
+  - slot_was_set:
+    - rain: 0
+  - slot_was_set:
+    - hot: false
+  - action: utter_temp_details
+  - intent: GetDetails
+    entities:
+    - request: humidity
+  - slot_was_set:
+    - request:
+      - humidity
+  - action: get_request_info
+  - intent: Other
+
+- story: interactive_story_2
+  steps:
+  - intent: GetWeather
+    entities:
+    - date
+  - slot_was_set:
+    - date
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: city
+  - slot_was_set:
+    - city: Mill Valley
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: GetDetails
+    entities:
+    - request: humidity
+    - request: wind
+  - slot_was_set:
+    - request:
+      - humidity
+      - wind
+  - action: get_request_info
+  - intent: GetWeather
+    entities:
+    - city: Palo Alto
+    - date: '2022-03-08T00:00:00.000-08:00'
+  - slot_was_set:
+    - city: Palo Alto
+  - slot_was_set:
+    - date: '2022-03-08T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_3
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: Mountain View
+  - slot_was_set:
+    - city: Mountain View
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_4
+  steps:
+  - intent: GetWeather
+    entities:
+    - date
+  - slot_was_set:
+    - date
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: city
+  - slot_was_set:
+    - city: Yountville
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_5
+  steps:
+  - intent: GetWeather
+    entities:
+    - date: '2022-03-08T00:00:00.000-08:00'
+  - slot_was_set:
+    - date: '2022-03-08T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: city
+  - slot_was_set:
+    - city: Menlo Park
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_6
+  steps:
+  - intent: GetWeather
+    entities:
+    - date: '2022-03-10T00:00:00.000-08:00'
+  - slot_was_set:
+    - date: '2022-03-10T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: city
+  - slot_was_set:
+    - city: Sebastopol
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: GetDetails
+    entities:
+    - request: wind
+    - request: humidity
+  - slot_was_set:
+    - request:
+      - wind
+      - humidity
+  - action: get_request_info
+  - intent: GetWeather
+    entities:
+    - city: mill valley
+  - slot_was_set:
+    - city: mill valley
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_7
+  steps:
+  - intent: GetWeather
+    entities:
+    - date: '2022-03-09T00:00:00.000-08:00'
+  - slot_was_set:
+    - date: '2022-03-09T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: city
+  - slot_was_set:
+    - city: Fairfax
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: Other
+
+
+- story: interactive_story_9
+  steps:
+  - intent: GetWeather
+    entities:
+    - date: '2022-03-07T00:00:00.000-08:00'
+  - slot_was_set:
+    - date: '2022-03-07T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: city
+  - slot_was_set:
+    - city: Ciudad de Mexico
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: GetDetails
+    entities:
+    - request: humidity
+    - request: wind
+  - slot_was_set:
+    - request:
+      - humidity
+      - wind
+  - action: get_request_info
+  - intent: Other
+
+- story: interactive_story_10
+  steps:
+  - intent: GetWeather
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: city
+  - slot_was_set:
+    - city: Berkeley
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: GetWeather
+    entities:
+    - date: '2022-03-06T00:00:00.000-08:00'
+  - slot_was_set:
+    - date: '2022-03-06T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - action: utter_temp_details
+  - intent: GetWeather
+    entities:
+    - city: Long Beach
+    - date: '2022-03-13T00:00:00.000-08:00'
+  - slot_was_set:
+    - city: Long Beach
+  - slot_was_set:
+    - date: '2022-03-13T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_11
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: calistoga
+    - date: '2022-03-03T00:00:00.000-08:00'
+  - slot_was_set:
+    - city: calistoga
+  - slot_was_set:
+    - date: '2022-03-03T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: GetDetails
+    entities:
+    - request: humidity
+  - slot_was_set:
+    - request:
+      - humidity
+  - action: get_request_info
+  - intent: Other
+
+- story: interactive_story_12
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: Hercules
+    - date: '2022-03-09T00:00:00.000-08:00'
+  - slot_was_set:
+    - city: Hercules
+  - slot_was_set:
+    - date: '2022-03-09T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: GetDetails
+    entities:
+    - request: wind
+  - slot_was_set:
+    - request:
+      - wind
+  - action: get_request_info
+  - intent: Other
+
+- story: interactive_story_1
+  steps:
+  - intent: GetWeather
+    entities:
+    - date: '2022-03-07T00:00:00.000-08:00'
+  - slot_was_set:
+    - date: '2022-03-07T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: city
+  - slot_was_set:
+    - city: London
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: GetDetails
+    entities:
+    - request: wind
+  - slot_was_set:
+    - request:
+      - wind
+  - action: get_request_info
+  - intent: Other
+
+- story: interactive_story_2
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: San Jose
+  - slot_was_set:
+    - city: San Jose
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: GetDetails
+    entities:
+    - request: humidity
+  - slot_was_set:
+    - request:
+      - humidity
+  - action: get_request_info
+  - intent: Other
+
+- story: interactive_story_3
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: Glasgow
+  - slot_was_set:
+    - city: Glasgow
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp
+  - slot_was_set:
+    - humidity
+  - slot_was_set:
+    - wind
+  - slot_was_set:
+    - rain
+  - slot_was_set:
+    - hot
+  - action: utter_temp_details
+  - intent: GetDetails
+    entities:
+    - request: wind
+  - slot_was_set:
+    - request:
+      - wind
+  - action: get_request_info
+  - intent: Other
+
+- story: interactive_story_1
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: Novato
+    - date: '2022-03-13T00:00:00.000-08:00'
+  - slot_was_set:
+    - city: Novato
+  - slot_was_set:
+    - date: '2022-03-13T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp: 13.51
+  - slot_was_set:
+    - humidity: 77
+  - slot_was_set:
+    - wind: 6.76
+  - slot_was_set:
+    - rain: 0
+  - slot_was_set:
+    - hot: false
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_2
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: Campbell
+    - date: '2022-03-01T00:00:00.000-08:00'
+  - slot_was_set:
+    - city: Campbell
+  - slot_was_set:
+    - date: '2022-03-01T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp: 7.42
+  - slot_was_set:
+    - humidity: 76
+  - slot_was_set:
+    - wind: 3.13
+  - slot_was_set:
+    - rain: 0
+  - slot_was_set:
+    - hot: false
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_3
+  steps:
+  - intent: GetWeather
+    entities:
+    - date: '2022-03-07T00:00:00.000-08:00'
+  - slot_was_set:
+    - date: '2022-03-07T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: city
+  - slot_was_set:
+    - city: San Jose
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp: 13.78
+  - slot_was_set:
+    - humidity: 70
+  - slot_was_set:
+    - wind: 2.75
+  - slot_was_set:
+    - rain: 0.16
+  - slot_was_set:
+    - hot: false
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_4
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: Paris
+  - slot_was_set:
+    - city: Paris
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp: 12.11
+  - slot_was_set:
+    - humidity: 83
+  - slot_was_set:
+    - wind: 2.05
+  - slot_was_set:
+    - rain: 0.25
+  - slot_was_set:
+    - hot: false
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_5
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: Millbrae
+    - date: '2022-03-06T00:00:00.000-08:00'
+  - slot_was_set:
+    - city: Millbrae
+  - slot_was_set:
+    - date: '2022-03-06T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp: 10.11
+  - slot_was_set:
+    - humidity: 65
+  - slot_was_set:
+    - wind: 5.66
+  - slot_was_set:
+    - rain: 0.92
+  - slot_was_set:
+    - hot: false
+  - action: utter_temp_details
+  - intent: Other
+
+- story: interactive_story_6
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: Pleasant Hill
+    - date: '2022-03-09T00:00:00.000-08:00'
+  - slot_was_set:
+    - city: Pleasant Hill
+  - slot_was_set:
+    - date: '2022-03-09T00:00:00.000-08:00'
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp: 14.63
+  - slot_was_set:
+    - humidity: 54
+  - slot_was_set:
+    - wind: 3.63
+  - slot_was_set:
+    - rain: 0
+  - slot_was_set:
+    - hot: false
+  - action: utter_temp_details
+  - intent: Other
+
+- story: story 
+  steps:
+  - intent: GetWeather
+    entities:
+    - city: Hercules
+  - slot_was_set:
+    - city: Hercules
+  - action: city_form
+  - active_loop: city_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: get_weather_details
+  - slot_was_set:
+    - temp: 14.04
+  - slot_was_set:
+    - humidity: 71
+  - slot_was_set:
+    - wind: 2.39
+  - slot_was_set:
+    - rain: 0
+  - slot_was_set:
+    - hot: false
+  - action: utter_temp_details
+  - intent: Other

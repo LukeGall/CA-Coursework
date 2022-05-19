@@ -1,0 +1,110 @@
+version: '3.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- Other
+- GetWeather
+- GetDetails
+entities:
+- city
+- request
+- date
+slots:
+  city:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: city
+  request:
+    type: list
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: request
+  date:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: date
+  temp:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  humidity:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  wind:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  rain:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  hot:
+    type: bool
+    influence_conversation: false
+    mappings:
+    - type: custom
+responses:
+  utter_ask_city:
+  - text: What city are you checking the weather for?
+  - text: What city should I check it for?
+  - text: On which city specifically?
+  - text: Any particular city's weather forecast?
+  - text: For what city?
+  - text: For which city?
+  - text: What city would you like to check the weather?
+  - text: Which city are you interested in?
+  utter_temp_details:
+  - condition:
+    - type: slot
+      name: hot
+      value: true
+    text: It is not that cold, the average temperature on that day is {temp} degrees with {rain} percent chance of rain.
+  - text: The average temperature is {temp} degrees with a {rain} percent chance of rain.
+  - text: The temperature in {city} is {temp} degrees with {rain} percent chance of rain
+  - text: The temperature is expected to be {temp} degrees with a {rain} of rain.
+  - text: The average temperature for the day should be {temp} degrees and {rain} percent chance of rain.
+  - text: The expected average temperature for the day is {temp} degrees Celsius, with a {rain} chance of rain.
+  - text: The average temperature should be {temp} degrees Celsius. There'll be a {rain} percent chance of rain.
+  - text: Average temperature of {temp} degrees Celsius. There's a {rain} % chance of rain.
+  - text: The temperature will be averaging at around {temp} degrees Celsius for the day and the possibility of rain is at {rain} percent.
+  - text: The weather for {city} for the day should be an average temperature of {temp} degrees Celsius with a {rain} percent chance of rain.
+  - text: Sure. There will be a {rain} percent change of rain with an average temperature of {temp} degrees Celsius.
+  - text: The average temperature will be {temp} degrees with a {rain} percent chance of rain.
+  - text: For that day there is a {rain} percent chance of rain and the average temperature should be {temp} degrees Celsius.
+  - text: The average temperature in {city} should be {temp} degrees Celsius. There is also a {rain} percent chance of rain.
+  - text: The temperature will be around {temp} degrees Celsius with a {rain} percent chance of raining.
+  - text: The temperature for that day will be {temp} C with a {rain} percent chance of rain.
+  - text: The temperature on average will be {temp} degrees C with a {rain} percent chance of rain.
+  - text: the weather that day should be {temp} degrees and there'll be a {rain} percent chance of rain.
+  utter_humidity_details:
+  - text: it will be {humidity} percent humidity
+  - text: it'll be around {humidity} percent.
+  utter_wind_details:
+  - text: Wind speed should be {wind} miles an hour.
+  utter_humidity_and_wind:
+  - text: Humidity is expected to be around {humidity} percent and wind speed is at {wind} miles per hour.
+  - text: The wind speed will be around {wind} miles per hour. The humidity should be around {humidity}%.
+  - text: The humidity will be around {humidity} percent and the average wind speed {wind} miles per hour.
+actions:
+- get_weather_details
+- get_request_info
+- utter_ask_city
+- utter_humidity_and_wind
+- utter_humidity_details
+- utter_temp_details
+- utter_wind_details
+forms:
+  city_form:
+    required_slots:
+    - city

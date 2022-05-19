@@ -1,0 +1,123 @@
+version: "3.0"
+
+# Conditional, more force response
+rules: 
+- rule: Get city policy
+  steps:
+  - intent: GetWeather
+  - action: city_form
+  - active_loop: city_form
+
+- rule: Submit city form 
+  condition: 
+  - active_loop: city_form 
+  steps:
+  - action: city_form 
+  - active_loop: null 
+  - slot_was_set:
+    - requested_slot: null 
+  - action: get_weather_details
+  - action: utter_temp_details
+
+- rule: Get city details 
+  steps: 
+  - intent: GetCityDetails
+  - action: city_info_form
+  - active_loop: city_info_form 
+
+- rule: submit city info form pop
+  condition:
+  - active_loop: city_info_form
+  - slot_was_set:
+    - city_info: population
+  steps:
+  - action: city_info_form
+  - active_loop: null 
+  - slot_was_set:
+    - requested_slot: null 
+  - action: action_city_details
+  - action: utter_city_pop
+
+- rule: submit city info form region
+  condition:
+  - active_loop: city_info_form
+  - slot_was_set:
+    - city_info: region
+  steps:
+  - action: city_info_form
+  - active_loop: null 
+  - slot_was_set:
+    - requested_slot: null 
+  - action: action_city_details
+  - action: utter_city_region
+
+- rule: submit city info form all
+  condition:
+  - active_loop: city_info_form
+  - slot_was_set:
+    - city_info: all
+  steps:
+  - action: city_info_form
+  - active_loop: null 
+  - slot_was_set:
+    - requested_slot: null 
+  - action: action_city_details
+  - action: utter_city_info
+
+- rule: submit city info form country
+  condition:
+  - active_loop: city_info_form
+  - slot_was_set:
+    - city_info: country
+  steps:
+  - action: city_info_form
+  - active_loop: null 
+  - slot_was_set:
+    - requested_slot: null 
+  - action: action_city_details
+  - action: utter_city_country
+
+- rule: Get country details 
+  steps: 
+  - intent: GetCountryDetails
+  - action: country_info_form
+  - active_loop: country_info_form 
+
+- rule: submit country info form capital
+  condition:
+  - active_loop: country_info_form
+  - slot_was_set:
+    - country_info: capital
+  steps:
+  - action: country_info_form
+  - active_loop: null 
+  - slot_was_set:
+    - requested_slot: null 
+  - action: action_country_details
+  - action: utter_capital_city
+
+- rule: submit country info form regions
+  condition:
+  - active_loop: country_info_form
+  - slot_was_set:
+    - country_info: regions
+  steps:
+  - action: country_info_form
+  - active_loop: null 
+  - slot_was_set:
+    - requested_slot: null 
+  - action: action_country_details
+  - action: utter_different_regions
+
+- rule: submit country info form both
+  condition:
+  - active_loop: country_info_form
+  - slot_was_set:
+    - country_info: both
+  steps:
+  - action: country_info_form
+  - active_loop: null 
+  - slot_was_set:
+    - requested_slot: null 
+  - action: action_country_details
+  - action: utter_country_details
