@@ -17,8 +17,8 @@ from datetime import datetime
 apikey = 'e74a0e76b219fdc73d7011c2190babfb'
 
 headers = {
-    'x-rapidapi-host': "wft-geo-db.p.rapidapi.com",
-    'x-rapidapi-key': "5e5be29b95msh68fc66e654e83fdp1246b4jsn7b63084a758b"
+    'x-rapidapi-host': "XXXXX",
+    'x-rapidapi-key': "XXXXX"
     }
 
 geoUrl = "https://wft-geo-db.p.rapidapi.com/v1/geo/"
