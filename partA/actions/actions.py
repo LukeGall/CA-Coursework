@@ -15,7 +15,7 @@ from rasa_sdk.events import SlotSet
 import requests
 from datetime import datetime
 
-apikey = 'e74a0e76b219fdc73d7011c2190babfb'
+apikey = 'XXXXX'
 
 
 def strip_time(duckTime):
